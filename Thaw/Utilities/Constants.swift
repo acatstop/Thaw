@@ -193,6 +193,10 @@ nonisolated enum Constants {
 
     static let issuesURL = repositoryURL.appendingPathComponent("issues")
 
+    static let frequentIssuesURL = repositoryURL.appending(path: "blob/development/FREQUENT_ISSUES.md")
+    static let contributorsURL = repositoryURL.appending(path: "graphs/contributors")
+    static let translatorsURL = repositoryURL.appending(path: "blob/development/CREDITS.md")
+
     /// The URL for sponsoring/donating.
     static let donateURL: URL = requiredInfoPlistURL(donateURLInfoPlistKey)
 
