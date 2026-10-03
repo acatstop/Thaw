@@ -105,6 +105,40 @@ open Thaw.xcodeproj
 ./scripts/thaw-devrun.sh
 ```
 
+### Build a shareable DMG without a release
+
+Maintainers can run [Build DMG](workflows/build-dmg.yml) to build Thaw and
+PlatformRuntimeKit from sibling source checkouts. No PRK binary release is
+needed. The workflow signs and notarizes the app and DMG, uploads only the DMG
+for three days, and creates no tag or GitHub release.
+
+Reuse the `THAW_NEXT_READ_TOKEN` Actions secret. Its token needs **Contents:
+read** access to `thaw-app/PlatformRuntimeKit`; for a fine-grained token, add
+that repository to its allowed repositories. The existing Apple signing and
+notarization secrets are unchanged. Checkout credentials are not persisted.
+Only build reviewed refs: source build scripts run in the signing job.
+
+After the desired commits exist on GitHub, replace these placeholders:
+
+```bash
+gh workflow run build-dmg.yml -R thaw-app/Thaw \
+  --ref YOUR_WORKFLOW_BRANCH -f prk_ref=YOUR_PRK_COMMIT
+```
+
+`--ref` selects the workflow version and, by default, the Thaw source commit.
+The optional `ref` input selects a different Thaw branch, tag, or commit.
+`prk_ref` accepts a PRK branch, tag, or commit and defaults to `main`; use a full
+commit SHA for a repeatable build. Both resolved SHAs appear in the run summary
+and artifact name. Unpushed local commits cannot be built by GitHub Actions.
+
+This source-checkout setup applies to Build DMG, not the separate release or
+pull-request CI workflows. To check the checkout logic locally on macOS:
+
+```bash
+bash scripts/tests/test-build-dmg-source.sh
+actionlint .github/workflows/build-dmg.yml .github/workflows/release.yml
+```
+
 ### Code style
 
 Thaw uses [SwiftLint](https://github.com/realm/SwiftLint) and [SwiftFormat](https://github.com/nicklockwood/SwiftFormat). Config lives in [`.swiftlint.yml`](../.swiftlint.yml) and [`.swiftformat`](../.swiftformat). Before submitting, run:
