@@ -171,7 +171,10 @@ struct AboutSettingsPane: View {
             .buttonStyle(.plain)
             .fixedSize(horizontal: false, vertical: true)
 
-            Text(Constants.copyrightString)
+            VStack(spacing: ThawSpacing.tight) {
+                Text(Constants.copyrightString)
+                Text(verbatim: "© 2026 Thaw-app")
+            }
         }
         .font(.footnote)
         .foregroundStyle(ThawInk.supporting)
