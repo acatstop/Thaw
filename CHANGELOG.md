@@ -17,6 +17,7 @@ and the Sparkle appcast, unless overridden with the `release_notes` input.
 - Amphetamine and Rectangle keep their hidden-item identities across title changes and restarts, without merging distinct sibling items.
 - Items parked off the menu bar no longer add new overflow pressure unless macOS shows its own overflow control.
 - Appearance settings detect an automatically hiding menu bar on macOS 27 and show the appropriate notice.
+- Release notes and Credits use the same body and heading text styles as Settings instead of a separate oversized type scale.
 
 ### Changed
 
