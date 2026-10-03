@@ -1072,19 +1072,24 @@ extension HIDEventManager {
         -> Bool
     {
         // Perform cheap geometric checks first.
-        guard
-            isMouseInsideMenuBar(appState: appState, screen: screen),
-            !isMouseInsideNotch(appState: appState, screen: screen)
-        else {
+        guard isMouseInsideMenuBar(appState: appState, screen: screen) else {
             return false
         }
 
-        // Then perform expensive Window Server checks.
-        //
-        // Exclude application menu region from empty-space detection.
-        let inAppMenu = isMouseInsideApplicationMenu(appState: appState, screen: screen)
-        return !inAppMenu
-            && !isMouseInsideMenuBarItem(appState: appState, screen: screen)
+        // On notched screens, all application menus live to the left of the notch.
+        // Prevent empty-space triggers (hover, click, scroll) to the left of the notch.
+        if let notch = screen.frameOfNotch, let mouseLocation = MouseHelpers.locationAppKit {
+            if mouseLocation.x < notch.minX {
+                return false
+            }
+        } else {
+            // Non-notched display: exclude application menu region if detected
+            if isMouseInsideApplicationMenu(appState: appState, screen: screen) {
+                return false
+            }
+        }
+
+        return !isMouseInsideMenuBarItem(appState: appState, screen: screen)
             && !isMouseInsideIceIcon(appState: appState)
     }
 
