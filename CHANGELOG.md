@@ -7,6 +7,32 @@ The `release.yml` workflow reads the section matching the release tag
 (`## [tag]`) and uses it as the release notes for both the GitHub Release
 and the Sparkle appcast, unless overridden with the `release_notes` input.
 
+## [3.0.0-beta.2] - 2026-10-02
+
+**macOS 27 only · Build 112**
+
+### Fixed
+
+- Layout icon previews use current menu bar positions instead of repeatedly retrying stale screenshot coordinates. Movement and overlap checks still reject captures that could show a neighboring item.
+- Amphetamine and Rectangle keep their hidden-item identities across title changes and restarts, without merging distinct sibling items.
+- Items parked off the menu bar no longer add new overflow pressure unless macOS shows its own overflow control.
+- Appearance settings detect an automatically hiding menu bar on macOS 27 and show the appropriate notice.
+
+### Changed
+
+- Automatic overflow is off by default. Existing user preferences are unchanged.
+- A gold app icon and matching accent color.
+- About has a revised layout, a sidebar entry, and a Credits page for contributors and translators.
+
+### Removed
+
+- The Menu bar history experiment, including click history and unused-item suggestions. Previously recorded history is cleared on launch. Layout backups and hiding assignments are unaffected.
+
+### Development
+
+- Local builds compile the sibling PlatformRuntimeKit source checkout against the same MenuBarModel as Thaw.
+- `thaw-devrun.sh` reports build stages, saves full logs outside the checkout, supports `--verbose`, and verifies the launched process and diagnostic-logging preference.
+
 ## [3.0.0-beta.1] - 2026-10-01
 
 **macOS 27 only · Build 111 · First beta**
