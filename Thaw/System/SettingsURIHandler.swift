@@ -15,6 +15,9 @@ import Security
 enum SettingsURIHandler {
     private static let diagLog = DiagLog(category: "SettingsURIHandler")
 
+    /// Tests use a private center so fixture writes cannot reach the running app's settings models.
+    static var settingsChangeNotificationCenter = NotificationCenter.default
+
     /// Keep global allow-lists, Defaults.Key mappings, and bounds together to prevent drift.
     /// Per-display settings live in DisplaySettingsManager and perDisplayKeys instead.
     struct SettingURIEntry {
@@ -398,9 +401,7 @@ enum SettingsURIHandler {
                 return false
             }
 
-            Defaults.set(boolValue, forKey: entry.defaultsKey)
-
-            postSettingsDidChangeNotification(key: key, value: boolValue)
+            guard applyBooleanSetting(boolValue, key: key, entry: entry) else { return false }
 
             diagLog.info("Settings URI: Set \(key) = \(boolValue)")
 
@@ -417,6 +418,18 @@ enum SettingsURIHandler {
             diagLog.warning("Settings URI: Key '\(key)' has an unsupported kind")
             return false
         }
+    }
+
+    private static func applyBooleanSetting(_ value: Bool, key: String, entry: SettingURIEntry) -> Bool {
+        if entry.defaultsKey == .enableExperimentalSystemItemHiding,
+           value, Defaults.bool(forKey: .enableNativeAppHiding)
+        {
+            diagLog.warning("Settings URI: Cannot enable system item hiding while native app hiding is enabled")
+            return false
+        }
+        Defaults.set(value, forKey: entry.defaultsKey)
+        postSettingsDidChangeNotification(key: key, value: value)
+        return true
     }
 
     /// Handles setting a double/numeric value with range validation.
@@ -608,9 +621,7 @@ enum SettingsURIHandler {
         let currentValue = effectiveBool(for: entry)
         let newValue = !currentValue
 
-        Defaults.set(newValue, forKey: entry.defaultsKey)
-
-        postSettingsDidChangeNotification(key: key, value: newValue)
+        guard applyBooleanSetting(newValue, key: key, entry: entry) else { return false }
 
         diagLog.info("Settings URI: Toggled \(key) from \(currentValue) to \(newValue)")
 
@@ -636,7 +647,7 @@ enum SettingsURIHandler {
 
     /// Posts a notification that a setting was changed externally via Settings URI.
     private static func postSettingsDidChangeNotification(key: String, value: Bool) {
-        NotificationCenter.default.post(
+        settingsChangeNotificationCenter.post(
             name: .settingsDidChangeViaURI,
             object: nil,
             userInfo: [
@@ -647,7 +658,7 @@ enum SettingsURIHandler {
     }
 
     private static func postSettingsDidChangeNotification(key: String, doubleValue: Double) {
-        NotificationCenter.default.post(
+        settingsChangeNotificationCenter.post(
             name: .settingsDidChangeViaURI,
             object: nil,
             userInfo: [
@@ -658,7 +669,7 @@ enum SettingsURIHandler {
     }
 
     private static func postSettingsDidChangeNotification(key: String, rawEnumValue: Int) {
-        NotificationCenter.default.post(
+        settingsChangeNotificationCenter.post(
             name: .settingsDidChangeViaURI,
             object: nil,
             userInfo: [
