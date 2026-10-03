@@ -87,8 +87,22 @@ Thaw 2.x ships for macOS 26 and 3.0 for macOS 27. CI runs this repository's test
 
 ### Getting started
 
+This branch builds PlatformRuntimeKit from a sibling source checkout. Building
+requires access to that private repository; do not copy its sources into Thaw.
+
+```text
+workspace/
+  Thaw/
+  PlatformRuntimeKit/
+```
+
+Both packages must use `Thaw/MenuBarModel`. The kit defaults to that sibling
+path; `scripts/thaw-devrun.sh` also sets `MENU_BAR_MODEL_PATH` explicitly.
+
 ```bash
 open Thaw.xcodeproj
+# Or build, install, and launch alongside the released app:
+./scripts/thaw-devrun.sh
 ```
 
 ### Code style
