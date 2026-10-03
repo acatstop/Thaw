@@ -20,7 +20,7 @@ struct UXRefreshNavigationTests {
         #expect(SettingsSidebarPanes.groups.count == 1, "Got: \(SettingsSidebarPanes.groups.count)")
         #expect(SettingsSidebarPanes.all == [
             .general, .menuBarLayout, .visibility, .menuBarAppearance, .thawBar,
-            .profiles, .hotkeys, .automation, .displays, .spaces,
+            .profiles, .hotkeys, .automation, .triggers, .displays, .spaces,
             .privacy, .theLab, .tools, .about,
         ], "Got: \(SettingsSidebarPanes.all)")
     }
@@ -71,6 +71,7 @@ struct UXRefreshNavigationTests {
             "Profiles": .profiles,
             "Advanced": .advanced,
             "Automation": .automation,
+            "Triggers": .triggers,
             "Scripts": .scripts,
             "Widgets": .widgets,
             "The Lab": .theLab,

@@ -423,6 +423,7 @@ extension Defaults {
 
         case hotkeys = "Hotkeys"
         case profileHotkeys = "ProfileHotkeys"
+        case appRunningTriggers = "AppRunningTriggersV1"
         case menuBarItemHotkeys = "MenuBarItemHotkeys"
 
         // MARK: Advanced Settings

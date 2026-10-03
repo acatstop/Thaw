@@ -293,6 +293,8 @@ struct SettingsView: View {
                 hookSettings: appState.settings.automationHook,
                 advancedSettings: appState.settings.advanced
             )
+        case .triggers:
+            TriggersSettingsPane(manager: appState.appRunningTriggers)
         case .displays:
             DisplaySettingsPane(displaySettings: appState.settings.displaySettings)
         case .general:
@@ -521,7 +523,7 @@ enum SettingsSidebarPanes {
         // Appearance, Thaw Bar) need no heading.
         Group(panes: [
             .general, .menuBarLayout, .visibility, .menuBarAppearance, .thawBar,
-            .profiles, .hotkeys, .automation, .displays, .spaces,
+            .profiles, .hotkeys, .automation, .triggers, .displays, .spaces,
             .privacy, .theLab, .tools, .about,
         ]),
     ]

@@ -273,6 +273,8 @@ $(SRCROOT)/Thaw/RecordingWatch/RecordingDeviceProbe.swift
 $(SRCROOT)/Thaw/RecordingWatch/RecordingWatchManager.swift
 $(SRCROOT)/Thaw/RecordingWatch/RecordingWatchScreen.swift
 $(SRCROOT)/Thaw/Settings/MenuBarSectionName+Localized.swift
+$(SRCROOT)/Thaw/Settings/Models/Automation/AppRunningTrigger.swift
+$(SRCROOT)/Thaw/Settings/Models/Automation/AppRunningTriggersManager.swift
 $(SRCROOT)/Thaw/Settings/Models/Automation/AutomationHookSettings.swift
 $(SRCROOT)/Thaw/Settings/Models/Automation/AutomationSettings.swift
 $(SRCROOT)/Thaw/Settings/Models/Automation/HookScript.swift
@@ -343,6 +345,7 @@ $(SRCROOT)/Thaw/Settings/SettingsPanes/SpacesSettingsPane.swift
 $(SRCROOT)/Thaw/Settings/SettingsPanes/TheLabSettingsPane.swift
 $(SRCROOT)/Thaw/Settings/SettingsPanes/Tools/MenuBarLayoutBackupsSection.swift
 $(SRCROOT)/Thaw/Settings/SettingsPanes/ToolsSettingsPane.swift
+$(SRCROOT)/Thaw/Settings/SettingsPanes/TriggersSettingsPane.swift
 $(SRCROOT)/Thaw/Settings/SettingsPanes/WhatsNewView.swift
 $(SRCROOT)/Thaw/Settings/SettingsPanes/WidgetsSettingsPane.swift
 $(SRCROOT)/Thaw/Settings/SettingsView.swift

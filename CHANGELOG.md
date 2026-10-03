@@ -11,13 +11,20 @@ and the Sparkle appcast, unless overridden with the `release_notes` input.
 
 **macOS 27 only · Build 112**
 
+### Added
+
+- Triggers can show selected menu bar items while an app runs, including in the background. When it quits, the items follow their saved layout again.
+
 ### Fixed
 
 - Layout icon previews use current menu bar positions instead of repeatedly retrying stale screenshot coordinates. Movement and overlap checks still reject captures that could show a neighboring item.
 - Simple Mode keeps refreshing icon previews through the same capture loop as Layout, regardless of the last sidebar page.
 - Amphetamine and Rectangle keep their hidden-item identities across title changes and restarts, without merging distinct sibling items.
 - Items parked off the menu bar no longer add new overflow pressure unless macOS shows its own overflow control.
-- Appearance settings detect an automatically hiding menu bar on macOS 27 and show the appropriate notice.
+- Appearance detects an automatically hiding menu bar on macOS 27.
+- Split appearance pills cover mirrored status items on secondary displays and follow their live leading edge after startup.
+- Clicking Thaw’s icon after it moves no longer dismisses the Thaw Bar as an outside click before reopening it.
+- Showing Live Activities and the camera indicator prevents conflicting assertion-based hiding of Clock, Control Center, and Siri.
 - Release notes and Credits use the same body and heading text styles as Settings instead of a separate oversized type scale.
 
 ### Changed
