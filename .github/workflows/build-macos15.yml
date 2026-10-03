@@ -1,0 +1,46 @@
+name: Build Thaw macOS 15
+
+on:
+  push:
+    branches:
+      - fix/macos15-menu-hover
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Thaw
+        run: |
+          xcodebuild -project Thaw.xcodeproj \
+            -scheme Thaw \
+            -destination 'platform=macOS' \
+            -configuration Release \
+            -derivedDataPath Build \
+            MACOSX_DEPLOYMENT_TARGET=14.0 \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            build
+
+      - name: Find and Package Thaw.app
+        run: |
+          find Build -name "Thaw.app" -type d
+          APP_PATH=$(find Build -name "Thaw.app" -type d | head -n 1)
+          if [ -z "$APP_PATH" ]; then
+            echo "Error: Thaw.app not found!"
+            exit 1
+          fi
+          echo "Found app at: $APP_PATH"
+          cd "$(dirname "$APP_PATH")"
+          zip -r -y Thaw-1.3.0-beta1-macOS15-fixed.zip Thaw.app
+          mv Thaw-1.3.0-beta1-macOS15-fixed.zip "$GITHUB_WORKSPACE/"
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Thaw-1.3.0-beta1-macOS15-fixed
+          path: Thaw-1.3.0-beta1-macOS15-fixed.zip

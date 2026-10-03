@@ -1081,15 +1081,8 @@ extension HIDEventManager {
 
         // Then perform expensive Window Server checks.
         //
-        // When expanded section-divider windows are tracked by the Window
-        // Server, the AX-based application menu frame detection can return
-        // the extras menu bar instead of the application menu bar. Skip
-        // the check in that state — handleApplicationMenuClickThrough
-        // forwards left-clicks to the correct app menu separately.
-        let hasExpandedDivider = appState.menuBarManager.sections.contains { section in
-            section.controlItem.isSectionDivider && section.controlItem.state == .hideSection
-        }
-        let inAppMenu = hasExpandedDivider ? false : isMouseInsideApplicationMenu(appState: appState, screen: screen)
+        // Exclude application menu region from empty-space detection.
+        let inAppMenu = isMouseInsideApplicationMenu(appState: appState, screen: screen)
         return !inAppMenu
             && !isMouseInsideMenuBarItem(appState: appState, screen: screen)
             && !isMouseInsideIceIcon(appState: appState)
