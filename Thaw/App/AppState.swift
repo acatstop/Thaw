@@ -105,8 +105,6 @@ final class AppState {
     /// Lab recording watcher reads only public CoreAudio and CoreMediaIO state, independent of other subsystems.
     let recordingWatchManager = RecordingWatchManager()
 
-    /// Lab audit polls the published cache outside the manager to avoid perturbing discovery.
-    let hygieneAudit = MenuBarHygieneAudit()
     let applicationMenuCover = ApplicationMenuCover()
 
     /// Diagnostic logger for the app state.
@@ -221,7 +219,6 @@ final class AppState {
         swapBarManager.performSetup(with: self)
         controlItemPanel.performSetup(with: self)
         recordingWatchManager.performSetup(with: self)
-        hygieneAudit.performSetup(with: self)
         applicationMenuCover.performSetup(with: self)
         // The widget preview item exists only inside a running process, so
         // every launch re-publishes it when the user last left it enabled.

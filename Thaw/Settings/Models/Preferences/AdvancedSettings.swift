@@ -261,15 +261,6 @@ final class AdvancedSettings {
         }
     }
 
-    /// Record item arrivals and departures only while enabled; disabling clears the audit.
-    /// Records stay in Thaw's local preferences domain.
-    var enableBarHygieneAudit = Defaults.DefaultValue.enableBarHygieneAudit {
-        didSet {
-            guard oldValue != enableBarHygieneAudit else { return }
-            Defaults.set(enableBarHygieneAudit, forKey: .enableBarHygieneAudit)
-        }
-    }
-
     /// Cover Finder titles while the desktop is frontmost, leaving the Apple menu and Finder state unchanged.
     /// See ApplicationMenuCover for why this differs from hideApplicationMenus.
     var enableDesktopMenuHiding = Defaults.DefaultValue.enableDesktopMenuHiding {
@@ -406,7 +397,6 @@ final class AdvancedSettings {
                 recordingWatchPlacement = placement
             }
         }
-        Defaults.ifPresent(key: .enableBarHygieneAudit, assign: &enableBarHygieneAudit)
         Defaults.ifPresent(key: .enableDesktopMenuHiding, assign: &enableDesktopMenuHiding)
         Defaults.ifPresent(key: .menuBarOrderFulfillmentTimeout, assign: &menuBarOrderFulfillmentTimeout)
         Defaults.ifPresent(key: .searchIncludeVisible, assign: &searchIncludeVisible)
@@ -512,8 +502,6 @@ final class AdvancedSettings {
                 enableRecordingWatch = boolValue
             case "zenModeWhileRecording":
                 zenModeWhileRecording = boolValue
-            case "enableBarHygieneAudit":
-                enableBarHygieneAudit = boolValue
             case "enableDesktopMenuHiding":
                 enableDesktopMenuHiding = boolValue
             case "searchIncludeVisible":

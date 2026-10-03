@@ -18,9 +18,6 @@ extension AppSettings {
         // A reset is the one moment they explicitly ask for a clean slate,
         // and it is the only way to clear a record from the UI.
         appState?.itemManager.failureLedger.removeAll()
-        // Same reasoning, and the one place the hygiene history can be cleared
-        // without hunting for the Lab section that owns it.
-        appState?.hygieneAudit.ledger.clear()
     }
 
     func resetAppearance() {
@@ -89,7 +86,6 @@ extension AppSettings {
 
         advanced.zenModeWhileRecording = Defaults.DefaultValue.zenModeWhileRecording
         advanced.recordingWatchScreen = Defaults.DefaultValue.recordingWatchScreen
-        advanced.enableBarHygieneAudit = Defaults.DefaultValue.enableBarHygieneAudit
         advanced.enableDesktopMenuHiding = Defaults.DefaultValue.enableDesktopMenuHiding
         advanced.searchSectionOrder = AdvancedSettings.sanitizedSearchSectionOrder(
             from: Defaults.DefaultValue.searchSectionOrder

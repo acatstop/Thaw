@@ -87,7 +87,6 @@ enum SettingsURIHandler {
         "fetchReleaseNotes": SettingURIEntry(defaultsKey: .fetchReleaseNotes, kind: .boolean, isWritable: true),
         "enableRecordingWatch": SettingURIEntry(defaultsKey: .enableRecordingWatch, kind: .boolean, isWritable: true),
         "zenModeWhileRecording": SettingURIEntry(defaultsKey: .zenModeWhileRecording, kind: .boolean, isWritable: true),
-        "enableBarHygieneAudit": SettingURIEntry(defaultsKey: .enableBarHygieneAudit, kind: .boolean, isWritable: true),
         "enableDesktopMenuHiding": SettingURIEntry(defaultsKey: .enableDesktopMenuHiding, kind: .boolean, isWritable: true),
 
         // MARK: - Search

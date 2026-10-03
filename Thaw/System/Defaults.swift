@@ -180,7 +180,6 @@ nonisolated enum Defaults {
             .enableTextInputTakeover: DefaultValue.enableTextInputTakeover,
             .zenModeWhileRecording: DefaultValue.zenModeWhileRecording,
             .recordingWatchPlacement: DefaultValue.recordingWatchPlacement.rawValue,
-            .enableBarHygieneAudit: DefaultValue.enableBarHygieneAudit,
             .enableDesktopMenuHiding: DefaultValue.enableDesktopMenuHiding,
             .menuBarOrderFulfillmentTimeout: DefaultValue.menuBarOrderFulfillmentTimeout,
             .captureViaXPCService: DefaultValue.captureViaXPCService,
@@ -307,7 +306,6 @@ extension Defaults {
         static let recordingWatchScreen = RecordingWatchScreen.screenWithPointer
         /// Where along the top of that display they appear.
         static let recordingWatchPlacement = ThawHUDPlacement.center
-        static let enableBarHygieneAudit = false
         static let enableDesktopMenuHiding = false
         static let menuBarOrderFulfillmentTimeout: TimeInterval = 3
         /// Route screen capture through the MenuBarCaptureService helper, so a
@@ -505,13 +503,7 @@ extension Defaults {
         /// Where along the top of the chosen display the recording watch's
         /// announcements appear. Stored as the placement's raw value.
         case recordingWatchPlacement = "RecordingWatchPlacement"
-        /// Records when items appear in and disappear from the menu bar. Read
-        /// live so the audit starts and stops without relaunching.
-        case enableBarHygieneAudit = "EnableBarHygieneAudit"
         case enableDesktopMenuHiding = "EnableDesktopMenuHiding"
-        /// The bar hygiene audit's own store: per-item records and a capped
-        /// event tail, as one JSON blob. See MenuBarHygieneLedger.
-        case menuBarHygieneLedger = "MenuBarHygieneLedger"
         /// Persisted per-item volatility records. JSON blob
         /// keyed by tagIdentifier; see MenuBarItemVolatilityIndex.
         case menuBarItemVolatilityIndex = "MenuBarItemVolatilityIndex"
