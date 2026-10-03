@@ -405,7 +405,10 @@ final class MenuBarItemImageCache: @unchecked Sendable {
         revealedSection: MenuBarSection.Name?
     ) -> Bool {
         switch (section, revealedSection) {
-        case (.hidden, .hidden),
+        // Visible items also move when the capture indicator or a neighbour
+        // appears. Retrying their cached layout rectangles cannot recover.
+        case (.visible, _),
+             (.hidden, .hidden),
              (.hidden, .alwaysHidden),
              (.alwaysHidden, .alwaysHidden):
             true
