@@ -15,8 +15,23 @@ import ThawCapture
 @MainActor
 @Suite("Thumbnail capture fallback", .bug("https://github.com/thaw-app/Thaw/issues/1153"))
 struct MenuBarItemCaptureFallbackTests {
-    @Test("Visible captures re-read positions on every pass instead of retrying the layout cache")
-    func visibleCaptureRefreshesStalePositionsOnEveryPass() async throws {
+    @Test("Layout and Simple Mode use the same fresh-position capture pipeline", arguments: [false, true])
+    func visibleCaptureRefreshesStalePositionsOnEveryPass(simpleMode: Bool) async throws {
+        let nav = MenuBarItemImageCache.NavigationStateSnapshot(
+            isThawBarPresented: false,
+            isSearchPresented: false,
+            isAppFrontmost: true,
+            isSettingsPresented: true,
+            settingsNavigationIdentifier: simpleMode ? .general : .menuBarLayout,
+            isItemHotkeyListExpanded: false,
+            isSimpleModeSettings: simpleMode
+        )
+        let sections = MenuBarItemImageCache.capturableSections(
+            from: nav.liveCaptureScope.sections(thawBarSection: nil),
+            usesVisibilityRestrictions: true,
+            revealedSection: nil
+        )
+        try #require(sections == [.visible])
         let stale = makeItem(x: 1000)
         let neighbour = makeItem(title: "Neighbour", x: 1000, windowID: 102)
         let cache = MenuBarItemImageCache(screenIsLocked: { false })
@@ -34,7 +49,7 @@ struct MenuBarItemCaptureFallbackTests {
             let result = await cache.captureImages(
                 of: [stale], scale: 2, displayID: 42,
                 screenFrame: CGRect(x: 0, y: 0, width: 1470, height: 956),
-                freshBounds: MenuBarItemImageCache.shouldUseFreshBounds(for: .visible, revealedSection: nil),
+                freshBounds: MenuBarItemImageCache.shouldUseFreshBounds(for: sections[0], revealedSection: nil),
                 concealedIdentifiers: [], using: reader
             )
 

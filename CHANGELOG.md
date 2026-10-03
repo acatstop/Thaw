@@ -14,6 +14,7 @@ and the Sparkle appcast, unless overridden with the `release_notes` input.
 ### Fixed
 
 - Layout icon previews use current menu bar positions instead of repeatedly retrying stale screenshot coordinates. Movement and overlap checks still reject captures that could show a neighboring item.
+- Simple Mode keeps refreshing icon previews through the same capture loop as Layout, regardless of the last sidebar page.
 - Amphetamine and Rectangle keep their hidden-item identities across title changes and restarts, without merging distinct sibling items.
 - Items parked off the menu bar no longer add new overflow pressure unless macOS shows its own overflow control.
 - Appearance settings detect an automatically hiding menu bar on macOS 27 and show the appropriate notice.
