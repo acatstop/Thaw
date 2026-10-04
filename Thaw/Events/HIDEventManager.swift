@@ -1079,10 +1079,13 @@ extension HIDEventManager {
             return false
         }
 
-        // On notched screens, all application menus live to the left of the notch.
-        // Prevent empty-space triggers (hover, click, scroll) to the left of the notch.
+        // On notched screens, only allow triggers strictly to the right of the notch (x > notch.maxX).
+        // This completely eliminates:
+        // 1. Application menus (left of notch)
+        // 2. The notch area itself
+        // 3. The small gap/margin directly underneath the notch
         if let notch = screen.frameOfNotch, let mouseLocation = MouseHelpers.locationAppKit {
-            if mouseLocation.x < notch.minX {
+            if mouseLocation.x <= notch.maxX {
                 return false
             }
         } else {
