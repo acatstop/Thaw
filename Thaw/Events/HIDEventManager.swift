@@ -1072,7 +1072,10 @@ extension HIDEventManager {
         -> Bool
     {
         // Perform cheap geometric checks first.
-        guard isMouseInsideMenuBar(appState: appState, screen: screen) else {
+        guard
+            isMouseInsideMenuBar(appState: appState, screen: screen),
+            !isMouseInsideNotch(appState: appState, screen: screen)
+        else {
             return false
         }
 
